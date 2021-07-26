@@ -42,22 +42,22 @@ stages {
       
      }
  }
- stage('Sonarqube') {
-    environment {
+// stage('Sonarqube') {
+  //  environment {
 //        def scannerHome = tool 'sonarqube';
-            def scannerHome = tool 'SonarScanner 4.0';
-    }
-    steps {
+    //        def scannerHome = tool 'SonarScanner 4.0';
+    //}
+    //steps {
       //withSonarQubeEnv('sonarqube') {
           
-      withSonarQubeEnv('Sonarname') {
-            sh "${scannerHome}/bin/sonar-scanner"
-        }
+      //withSonarQubeEnv('Sonarname') {
+        //    sh "${scannerHome}/bin/sonar-scanner"
+      //  }
  //       timeout(time: 10, unit: 'MINUTES') {
    //       waitForQualityGate abortPipeline: true
      //   }
-    }
-}
+ //   }
+//}
      stage('Artifact upload') {
       steps {
        nexusPublisher nexusInstanceId: '1234', nexusRepositoryId: 'releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'gameoflife-web/target/gameoflife.war']], mavenCoordinate: [artifactId: 'gameoflife', groupId: 'com.wakaleo.gameoflife', packaging: 'war', version: '$BUILD_NUMBER']]]
