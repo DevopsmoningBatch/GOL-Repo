@@ -13,7 +13,8 @@ stages {
       // Get some code from a GitHub repository
 
       //git 'https://github.com/raknas999/game-of-life.git'
-      git 'https://github.com/raknas999/GOL-Repo.git'
+      //git 'https://github.com/raknas999/GOL-Repo.git'
+         git 'https://github.com/DevopsmoningBatch/GOL-Repo.git'
 
       // Get the Maven tool.
      
@@ -42,22 +43,22 @@ stages {
       
      }
  }
-// stage('Sonarqube') {
-  //  environment {
-//        def scannerHome = tool 'sonarqube';
-    //        def scannerHome = tool 'SonarScanner 4.0';
-    //}
-    //steps {
+ stage('Sonarqube') {
+   environment {
+       def scannerHome = tool 'sonarqube';
+    //       def scannerHome = tool 'SonarScanner 4.0';
+    }
+    steps {
       //withSonarQubeEnv('sonarqube') {
           
-      //withSonarQubeEnv('Sonarname') {
-        //    sh "${scannerHome}/bin/sonar-scanner"
-      //  }
+      withSonarQubeEnv('Sonarname') {
+          sh "${scannerHome}/bin/sonar-scanner"
+       }
  //       timeout(time: 10, unit: 'MINUTES') {
    //       waitForQualityGate abortPipeline: true
      //   }
- //   }
-//}
+ }
+}
      stage('Artifact upload') {
       steps {
        nexusPublisher nexusInstanceId: '1234', nexusRepositoryId: 'Releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'gameoflife-web/target/gameoflife.war']], mavenCoordinate: [artifactId: 'gameoflife', groupId: 'com.wakaleo.gameoflife', packaging: 'war', version: '$BUILD_NUMBER']]]
@@ -74,7 +75,7 @@ post {
             archiveArtifacts 'gameoflife-web/target/*.war'
         }
        failure {
-           mail to:"raknas000@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
+           mail to:"byra.pavi@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
         }
     }       
 }
