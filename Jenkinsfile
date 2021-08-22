@@ -6,21 +6,21 @@ pipeline {
     }
 stages { 
      
- //stage('Preparation') { 
- //   steps {
+ stage('Preparation') { 
+  steps {
 // for display purpose
 
       // Get some code from a GitHub repository
 
-   //  git 'https://github.com/raknas999/GOL-Repo.git'
+   git 'https://github.com/DevopsmoningBatch/GOL-Repo.git'
 
       // Get the Maven tool.
      
  // ** NOTE: This 'M3' Maven tool must be configured
  
      // **       in the global configuration.   
-     //}
-   //}
+     }
+   }
 
    stage('Build') {
        steps {
@@ -73,7 +73,7 @@ post {
             archiveArtifacts 'gameoflife-web/target/*.war'
         }
         failure {
-            mail to:"raknas000@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
+            mail to:"byra.pavi@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
         }
     }       
 }
